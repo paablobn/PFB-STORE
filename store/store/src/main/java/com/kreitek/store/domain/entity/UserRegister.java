@@ -2,6 +2,7 @@ package com.kreitek.store.domain.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.Positive;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -27,6 +28,14 @@ public class UserRegister {
 
     @Column(length = 100, nullable = false)
     private String password;
+
+    @ManyToMany
+    @JoinTable(
+        name = "user_fav",
+        joinColumns = @JoinColumn(name = "user_id"),
+        inverseJoinColumns = @JoinColumn(name = "item_id"))
+    private List<Item> favorites;
+
 
     public UserRegister(){
 
@@ -86,5 +95,13 @@ public class UserRegister {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public List<Item> getFavorites() {
+        return favorites;
+    }
+
+    public void setFavorites(List<Item> favorites) {
+        this.favorites = favorites;
     }
 }
